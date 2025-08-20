@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catch the Ball Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #d0f0ff;
+    }
+    #game-container {
+        position: relative;
+        margin: 50px auto;
+        width: 400px;
+        height: 400px;
+        background-color: #fff;
+        border: 2px solid #000;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    #player {
+        position: absolute;
+        bottom: 10px;
+        left: 180px;
+        width: 40px;
+        height: 40px;
+        background-color: #ff5733;
+        border-radius: 50%;
+    }
+    .ball {
+        position: absolute;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        background-color: #33c1ff;
+        border-radius: 50%;
+    }
+    #score {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<h1>Catch the Ball</h1>
+<p>Use LEFT/RIGHT arrow keys or A/D keys to catch the falling balls!</p>
+<div id="game-container">
+    <div id="player"></div>
+</div>
+<div id="score">Score: 0</div>
+
+<script>
+const player = document.getElementById('player');
+const gameContainer = document.getElementById('game-container');
+const scoreDisplay = document.getElementById('score');
+
+let playerPos = 180;
+let score = 0;
+
+// Move player with Arrow keys or WASD
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') && playerPos > 0) playerPos -= 20;
+    if ((e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') && playerPos < 360) playerPos += 20;
+    player.style.left = playerPos + 'px';
+});
+
+// Spawn balls
+function createBall() {
+    const ball = document.createElement('div');
+    ball.classList.add('ball');
+    ball.style.left = Math.floor(Math.random() * 370) + 'px';
+    gameContainer.appendChild(ball);
+
+    let ballPos = 0;
+    const fallInterval = setInterval(() => {
+        if (ballPos > 370) {
+            gameContainer.removeChild(ball);
+            clearInterval(fallInterval);
+        } else {
+            ballPos += 5;
+            ball.style.top = ballPos + 'px';
+
+            // Check collision
+            const ballLeft = parseInt(ball.style.left);
+            if (
+                ballPos >= 360 &&
+                ballLeft + 30 >= playerPos &&
+                ballLeft <= playerPos + 40
+            ) {
+                score++;
+                scoreDisplay.textContent = 'Score: ' + score;
+                gameContainer.removeChild(ball);
+                clearInterval(fallInterval);
+            }
+        }
+    }, 50);
+}
+
+// Create a ball every 1 second
+setInterval(createBall, 1000);
+</script>
+</body>
+</html>
