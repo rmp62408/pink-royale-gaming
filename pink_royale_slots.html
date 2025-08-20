@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pink Royale Gaming - Slots</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#0b1a3a; color:#fff; }
+    header { background:#e91e63; padding:1rem; text-align:center; }
+    header h1 { margin:0; }
+    nav { background:#111; display:flex; justify-content:center; }
+    nav a { color:#fff; text-decoration:none; padding:1rem; display:block; }
+    nav a:hover { background:#e91e63; }
+    main { padding:2rem; text-align:center; }
+    #reels { display:flex; justify-content:center; gap:1rem; margin-top:2rem; }
+    .reel { width:80px; height:80px; font-size:2rem; display:flex; align-items:center; justify-content:center; border:2px solid #e91e63; border-radius:10px; background:#162447; }
+    button { margin-top:2rem; padding:0.5rem 1rem; font-size:1rem; border:none; border-radius:5px; background:#e91e63; color:#fff; cursor:pointer; }
+    button:hover { background:#ff4f8b; }
+    #result { margin-top:1rem; font-size:1.2rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Pink Royale Gaming - Slots</h1>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="slots.html">Slots</a>
+  <a href="blackjack.html">Blackjack</a>
+  <a href="roulette.html">Roulette</a>
+  <a href="sports.html">Sports</a>
+  <a href="live.html">Live Casino</a>
+  <a href="poker.html">Poker</a>
+</nav>
+
+<main>
+  <h2>Spin the Reels!</h2>
+  <div id="reels">
+    <div class="reel" id="reel1">🍒</div>
+    <div class="reel" id="reel2">🍋</div>
+    <div class="reel" id="reel3">🍉</div>
+  </div>
+  <button onclick="spin()">Spin</button>
+  <div id="result"></div>
+</main>
+
+<script>
+  const symbols = ['🍒','🍋','🍉','🍇','🍊','⭐'];
+  function spin() {
+    const reel1 = symbols[Math.floor(Math.random()*symbols.length)];
+    const reel2 = symbols[Math.floor(Math.random()*symbols.length)];
+    const reel3 = symbols[Math.floor(Math.random()*symbols.length)];
+
+    document.getElementById('reel1').textContent = reel1;
+    document.getElementById('reel2').textContent = reel2;
+    document.getElementById('reel3').textContent = reel3;
+
+    if(reel1 === reel2 && reel2 === reel3){
+      document.getElementById('result').textContent = '🎉 JACKPOT! You win! 🎉';
+    } else if(reel1 === reel2 || reel2 === reel3 || reel1 === reel3){
+      document.getElementById('result').textContent = '🙂 Nice! Two matching symbols.';
+    } else {
+      document.getElementById('result').textContent = '😢 No match. Try again!';
+    }
+  }
+</script>
+
+</body>
+</html>
